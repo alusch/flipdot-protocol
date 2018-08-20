@@ -1,0 +1,100 @@
+html {
+    font-family: "Source Sans Pro", sans-serif;
+    line-height: 1.5;
+}
+
+body {
+    max-width: 60em;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    font-family: Raleway;
+    font-weight: normal;
+    border-bottom: 8px solid #3fa9f5;
+}
+
+h2 {
+    font-family: Raleway;
+    font-weight: normal;
+    border-bottom: 4px solid #7ac943;
+}
+
+svg {
+    transform: translate(0, 0); /* Forces whole pixel alignment on Firefox */
+}
+
+figure {
+    padding: 30px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+figcaption {
+    margin: 10px 0 0;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+code {
+    background: #cccccc;
+    padding: 1px 3px 2px;
+    font-family: "Source Code Pro", monospace;
+}
+
+table {
+    margin: 30px 0;
+    text-align: left;
+}
+
+thead {
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
+}
+
+tr.description {
+    background-color: #ccc;
+    text-align: center;
+    font-style: italic;
+}
+
+td {
+    padding: 2px 10px;
+}
+
+code.hexdatalen, code.shield {
+    background: #ff75a8;
+}
+
+code.hexaddr, code.ground {
+    background: #3fa9f5;
+}
+
+code.hexmsgtype, code.ledpower {
+    background: #7ac943;
+}
+
+code.hexdata, code.mainpower {
+    background: #ff262e;
+}
+
+code.hexchksum, code.switchpower {
+    background: #ff931e;
+}
+
+code.rs485p {
+    background: #c249b1;
+}
+
+code.rs485n {
+    background: #f6e122;
+}
+
+.sidebyside {
+    display: flex;
+    justify-content: space-evenly;
+}
