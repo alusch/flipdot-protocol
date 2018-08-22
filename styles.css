@@ -48,10 +48,6 @@ table {
     text-align: left;
 }
 
-thead {
-    font-weight: bold;
-}
-
 tr:nth-child(even) {
     background-color: #eee;
 }
@@ -62,7 +58,7 @@ tr.description {
     font-style: italic;
 }
 
-td {
+td, th {
     padding: 2px 10px;
 }
 

@@ -70,10 +70,10 @@
             </svg>
 
             <table>
-                <thead>
-                    <td>Pin</td>
-                    <td>Function</td>
-                </thead>
+                <tr>
+                    <th>Pin</th>
+                    <th>Function</th>
+                </tr>
                 <tr>
                     <td><code class="mainpower">1</code></td>
                     <td>Main power (24V DC)</td>
@@ -108,8 +108,8 @@
     </figure>
 
     <p>I'm not sure what specific pin inserts they're using (there are a lot to choose from), but there are definitely two
-        types. Pins 1 and 4 are beefier since they'll be carrying a few amps. In theory you could build your own mating
-        connector, but I opted to buy original Luminator cables instead to avoid needing to figure that out.</p>
+        types. Pins 1 and 4 are beefier since they'll be carrying a few amps. In theory you could build your own mating connector,
+        but I opted to buy original Luminator cables instead to avoid needing to figure that out.</p>
 
     <p>At minimum, you need to connect main power, switched power, ground, and RS-485 +/&minus;. Switched power turns the
         sign on, and LED power enables the LEDs/backlight (I guess I'm not sure what that does on a Horizon sign). Main power
@@ -180,13 +180,13 @@
     <p>A handful of specific HEX message types make up the protocol:</p>
 
     <table>
-        <thead>
-            <td>Name</td>
-            <td>Address</td>
-            <td>MsgType</td>
-            <td>Data</td>
-            <td>Notes</td>
-        </thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>MsgType</th>
+            <th>Data</th>
+            <th>Notes</th>
+        </tr>
         <tr>
             <td>Send Data</td>
             <td>Data offset</td>
@@ -259,11 +259,11 @@
     <p>The sign's possible states (communicated via Report State) are as follows:
 
         <table>
-            <thead>
-                <td>Name</td>
-                <td>Value</td>
-                <td>Notes</td>
-            </thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Notes</th>
+            </tr>
             <tr>
                 <td>Unconfigured</td>
                 <td><code>0x0F</code></td>
@@ -330,12 +330,12 @@
             an Acknowledge Operation):</p>
 
         <table>
-            <thead>
-                <td>Name</td>
-                <td>Request</td>
-                <td>Ack</td>
-                <td>Notes</td>
-            </thead>
+            <tr>
+                <th>Name</th>
+                <th>Request</th>
+                <th>Ack</th>
+                <th>Notes</th>
+            </tr>
             <tr>
                 <td>Receive Config</td>
                 <td><code>0xA1</code></td>
@@ -393,11 +393,11 @@
             configuration, sending one page of pixels, then showing that page:</p>
 
         <table>
-            <thead>
-                <td>Sender</td>
-                <td>Raw Message</td>
-                <td>Decoded Message</td>
-            </thead>
+            <tr>
+                <th>Sender</th>
+                <th>Raw Message</th>
+                <th>Decoded Message</th>
+            </tr>
             <tr class="description">
                 <td colspan="3">Discovery</td>
             </tr>
