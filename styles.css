@@ -62,31 +62,31 @@ td, th {
     padding: 2px 10px;
 }
 
-code.hexdatalen, code.shield {
+code.hexdatalen, code.shield, code.signfamily {
     background: #ff75a8;
 }
 
-code.hexaddr, code.ground {
+code.hexaddr, code.ground, code.signid {
     background: #3fa9f5;
 }
 
-code.hexmsgtype, code.ledpower {
+code.hexmsgtype, code.ledpower, code.signheight {
     background: #7ac943;
 }
 
-code.hexdata, code.mainpower {
+code.hexdata, code.mainpower, code.signwidth {
     background: #ff262e;
 }
 
-code.hexchksum, code.switchpower {
+code.hexchksum, code.switchpower, code.signbits {
     background: #ff931e;
 }
 
-code.rs485p {
+code.rs485p, code.signpanel1 {
     background: #c249b1;
 }
 
-code.rs485n {
+code.rs485n, code.signpanel2 {
     background: #f6e122;
 }
 

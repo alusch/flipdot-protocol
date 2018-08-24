@@ -169,10 +169,11 @@
         address <code class="hexaddr">7</code>, containing <code class="hexdatalen">1</code> data byte: <code class="hexdata">0xFF</code>.
         Note that since we're spelling everything out in ASCII, one byte of numeric data requires two bytes to actually encode.</p>
 
-    <p>The DataLen field describes how many such two-character data byte sequences are present. Note that since it is represented
-        as a single byte, the data length cannot exceed 255 (0xFF), though in practice the Luminator protocol only sends
-        16-byte chunks anyway. If DataLen is 0, there are no data bytes, and MsgType is followed directly by Chksum. The
-        checksum is a <a href="https://en.wikipedia.org/wiki/Longitudinal_redundancy_check">longitudinal redundancy check</a>
+    <p>The <code class="hexdatalen">DataLen</code> field describes how many such two-character data byte sequences are present.
+        Note that since it is represented as a single byte, the data length cannot exceed 255 (0xFF), though in practice
+        the Luminator protocol only sends 16-byte chunks anyway. If <code class="hexdatalen">DataLen</code> is 0, there are
+        no data bytes, and <code class="hexmsgtype">MsgType</code> is followed directly by <code class="hexchksum">Chksum</code>.
+        The checksum is a <a href="https://en.wikipedia.org/wiki/Longitudinal_redundancy_check">longitudinal redundancy check</a>
         calculated on all numeric fields.</p>
 
     <h2>Protocol</h2>
@@ -841,7 +842,379 @@
 
         <h2>Configuration Data</h2>
 
-        <p>Coming soon</p>
+        <p>It's not exactly clear to me if this data actually configures the sign in some way, is verified by the sign to
+            ensure the controller has properly identified it, or something else entirely. I've haven't wanted to risk doing
+            any experiments along these lines on my sign. Regardless, you need to send this sign-specific block of 16 bytes
+            as part of establishing communication. The first byte indicates the family of sign, and different families have
+            different formats for the rest of the configuration block.</p>
+
+        <p>Note: I'm going to describe sign dimensions using the computer graphics convention of width &times; height since
+            that's the direction I'm approaching this from.</p>
+
+        <figure>
+            <svg width="734" height="82">
+                <path fill="#FF75A8" stroke="#000" stroke-miterlimit="10" d="M7.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(12.1 70.4)">
+                    0x04
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(25.6 39.7)">
+                    0
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(70.6 39.7)">
+                    1
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(115.6 39.7)">
+                    2
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(160.6 39.7)">
+                    3
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(205.6 39.7)">
+                    4
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(250.6 39.7)">
+                    5
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(295.6 39.7)">
+                    6
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(340.6 39.7)">
+                    7
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(385.6 39.7)">
+                    8
+                </text>
+                <text font-family="Source Sans Pro" font-size="15" transform="translate(350.2 13)">
+                    Bytes
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(430.6 39.7)">
+                    9
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(471.1 39.7)">
+                    10
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(516.1 39.7)">
+                    11
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(561.1 39.7)">
+                    12
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(606.1 39.7)">
+                    13
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(651.1 39.7)">
+                    14
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(696.1 39.7)">
+                    15
+                </text>
+                <path fill="#7AC943" stroke="#000" stroke-miterlimit="10" d="M187.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(205.6 70.4)">
+                    H
+                </text>
+                <path fill="#FF262E" stroke="#000" stroke-miterlimit="10" d="M232.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(246.1 70.4)">
+                    W1
+                </text>
+                <path fill="#FF262E" stroke="#000" stroke-miterlimit="10" d="M277.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(291.1 70.4)">
+                    W2
+                </text>
+                <path fill="#FF262E" stroke="#000" stroke-miterlimit="10" d="M322.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(336.1 70.4)">
+                    W3
+                </text>
+                <path fill="#3FA9F5" stroke="#000" stroke-miterlimit="10" d="M52.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(66.1 70.4)">
+                    ID
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M97.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(102.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M142.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(156.1 70.4)">
+                    ??
+                </text>
+                <path fill="#FF262E" stroke="#000" stroke-miterlimit="10" d="M367.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(381.1 70.4)">
+                    W4
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M547.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(552.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M592.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(597.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M637.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(642.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M682.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(687.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#FF931E" stroke="#000" stroke-miterlimit="10" d="M412.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(430.6 70.4)">
+                    B
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M457.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(462.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M502.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(507.1 70.4)">
+                    0x00
+                </text>
+            </svg>
+            <figcaption>Figure 4: Configuration format for MAX 3000 signs</figcaption>
+        </figure>
+
+        <p>MAX 3000 signs have an initial byte of <code class="signfamily">0x04</code>. <code class="signid">ID</code> is a
+            unique ID for the particular sign type within the family, e.g. the 90 &times; 7 side sign has ID <code class="signid">0x20</code>.
+            Byte 2 seems to always be zero, and byte 3 is unknown. <code class="signheight">H</code> is the height in pixels,
+            and <code class="signwidth">W1 + W2 + W3 + W4</code> is the total width. <code class="signbits">B</code> indicates
+            the number of bits per column (either 8 or 16). The remaining bytes appear unused and are always zero.</p>
+
+        <figure>
+            <svg width="734" height="82">
+                <path fill="#FF75A8" stroke="#000" stroke-miterlimit="10" d="M7.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(12.1 70.4)">
+                    0x08
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(25.6 39.7)">
+                    0
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(70.6 39.7)">
+                    1
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(115.6 39.7)">
+                    2
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(160.6 39.7)">
+                    3
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(205.6 39.7)">
+                    4
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(250.6 39.7)">
+                    5
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(295.6 39.7)">
+                    6
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(340.6 39.7)">
+                    7
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(385.6 39.7)">
+                    8
+                </text>
+                <text font-family="Source Sans Pro" font-size="15" transform="translate(350.2 13)">
+                    Bytes
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(430.6 39.7)">
+                    9
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(471.1 39.7)">
+                    10
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(516.1 39.7)">
+                    11
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(561.1 39.7)">
+                    12
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(606.1 39.7)">
+                    13
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(651.1 39.7)">
+                    14
+                </text>
+                <text font-family="Source Code Pro" font-size="15" transform="translate(696.1 39.7)">
+                    15
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M187.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(201.1 70.4)">
+                    ??
+                </text>
+                <path fill="#7AC943" stroke="#000" stroke-miterlimit="10" d="M232.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(250.6 70.4)">
+                    H
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M277.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(282.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#FF262E" stroke="#000" stroke-miterlimit="10" d="M322.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(340.6 70.4)">
+                    W
+                </text>
+                <path fill="#3FA9F5" stroke="#000" stroke-miterlimit="10" d="M52.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(66.1 70.4)">
+                    ID
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M97.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(102.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M142.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(156.1 70.4)">
+                    ??
+                </text>
+                <path fill="#C249B1" stroke="#000" stroke-miterlimit="10" d="M367.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(381.1 70.4)">
+                    A1
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M547.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(561.1 70.4)">
+                    ??
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M592.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(597.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M637.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(642.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#CCC" stroke="#000" stroke-miterlimit="10" d="M682.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(687.1 70.4)">
+                    0x00
+                </text>
+                <path fill="#F6E122" stroke="#000" stroke-miterlimit="10" d="M412.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(426.1 70.4)">
+                    A2
+                </text>
+                <path fill="#C249B1" stroke="#000" stroke-miterlimit="10" d="M457.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(471.1 70.4)">
+                    B1
+                </text>
+                <path fill="#F6E122" stroke="#000" stroke-miterlimit="10" d="M502.5 49.5h45v30h-45z" />
+                <text font-family="Source Code Pro" font-size="15" transform="translate(516.1 70.4)">
+                    B2
+                </text>
+            </svg>
+            <figcaption>Figure 5: Configuration format for Horizon signs</figcaption>
+        </figure>
+
+        <p>Horizon signs have an initial byte of <code class="signfamily">0x08</code>. <code class="signid">ID</code> is a
+            unique ID for the particular sign type within the family, e.g. the 96 &times; 8 side sign has ID <code class="signid">0xB4</code>.
+            Byte 2 seems to always be zero, and bytes 3 and 4 are unknown. <code class="signheight">H</code> is the height
+            in pixels, and <code class="signwidth">W</code> is the width. The next four bytes seem to indicate the arrangement
+            of sub-panels to create the final width: <code class="signwidth">W = </code><code class="signpanel1">A1 × B1</code><code> + </code><code
+                class="signpanel2">A2 × B2</code>. Byte 12 is unknown (generally zero but <code>0x04</code> for the 40 &times;
+            12 dash sign). The remaining bytes appear unused and are always zero.</p>
+
+        <p>These are the configuration blocks for all the signs I'm aware of:</p>
+
+        <table>
+            <tr>
+                <th>Family</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Data (hex)</th>
+            </tr>
+            <tr>
+                <td>MAX 3000</td>
+                <td>Front</td>
+                <td>112 &times; 16</td>
+                <td><code class="signfamily">04</code><code class="signid">47</code><code>00</code><code>0F</code><code class="signheight">10</code><code
+                        class="signwidth">1C</code><code class="signwidth">1C</code><code class="signwidth">1C</code><code class="signwidth">1C</code><code
+                        class="signbits">10</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>MAX 3000</td>
+                <td>Front</td>
+                <td>98 &times; 16</td>
+                <td><code class="signfamily">04</code><code class="signid">4D</code><code>00</code><code>0D</code><code class="signheight">10</code><code
+                        class="signwidth">0E</code><code class="signwidth">1C</code><code class="signwidth">1C</code><code class="signwidth">1C</code><code
+                        class="signbits">10</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>MAX 3000</td>
+                <td>Side</td>
+                <td>90 &times; 7</td>
+                <td><code class="signfamily">04</code><code class="signid">20</code><code>00</code><code>06</code><code class="signheight">07</code><code
+                        class="signwidth">1E</code><code class="signwidth">1E</code><code class="signwidth">1E</code><code class="signwidth">00</code><code
+                        class="signbits">08</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>MAX 3000</td>
+                <td>Rear</td>
+                <td>23 &times; 10</td>
+                <td><code class="signfamily">04</code><code class="signid">61</code><code>00</code><code>04</code><code class="signheight">0A</code><code
+                        class="signwidth">17</code><code class="signwidth">00</code><code class="signwidth">00</code><code class="signwidth">00</code><code
+                        class="signbits">10</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>MAX 3000</td>
+                <td>Rear</td>
+                <td>30 &times; 10</td>
+                <td><code class="signfamily">04</code><code class="signid">62</code><code>00</code><code>04</code><code class="signheight">0A</code><code
+                        class="signwidth">1E</code><code class="signwidth">00</code><code class="signwidth">00</code><code class="signwidth">00</code><code
+                        class="signbits">10</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>MAX 3000</td>
+                <td>Dash</td>
+                <td>30 &times; 7</td>
+                <td><code class="signfamily">04</code><code class="signid">26</code><code>00</code><code>03</code><code class="signheight">07</code><code
+                        class="signwidth">1E</code><code class="signwidth">00</code><code class="signwidth">00</code><code class="signwidth">00</code><code
+                        class="signbits">08</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>Horizon</td>
+                <td>Front</td>
+                <td>160 &times; 16</td>
+                <td><code class="signfamily">08</code><code class="signid">B1</code><code>00</code><code>15</code><code>0C</code><code
+                        class="signheight">10</code><code>00</code><code class="signwidth">A0</code><code class="signpanel1">04</code><code
+                        class="signpanel2">00</code><code class="signpanel1">28</code><code class="signpanel2">00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>Horizon</td>
+                <td>Front</td>
+                <td>140 &times; 16</td>
+                <td><code class="signfamily">08</code><code class="signid">B2</code><code>00</code><code>12</code><code>04</code><code
+                        class="signheight">10</code><code>00</code><code class="signwidth">8C</code><code class="signpanel1">01</code><code
+                        class="signpanel2">03</code><code class="signpanel1">14</code><code class="signpanel2">28</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>Horizon</td>
+                <td>Side</td>
+                <td>96 &times; 8</td>
+                <td><code class="signfamily">08</code><code class="signid">B4</code><code>00</code><code>07</code><code>0C</code><code
+                        class="signheight">08</code><code>00</code><code class="signwidth">60</code><code class="signpanel1">02</code><code
+                        class="signpanel2">00</code><code class="signpanel1">30</code><code class="signpanel2">00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>Horizon</td>
+                <td>Rear</td>
+                <td>48 &times; 16</td>
+                <td><code class="signfamily">08</code><code class="signid">B5</code><code>00</code><code>07</code><code>0C</code><code
+                        class="signheight">10</code><code>00</code><code class="signwidth">30</code><code class="signpanel1">01</code><code
+                        class="signpanel2">00</code><code class="signpanel1">30</code><code class="signpanel2">00</code><code>00</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+
+            <tr>
+                <td>Horizon</td>
+                <td>Dash</td>
+                <td>40 &times; 12</td>
+                <td><code class="signfamily">08</code><code class="signid">B9</code><code>00</code><code>06</code><code>8C</code><code
+                        class="signheight">0C</code><code>00</code><code class="signwidth">28</code><code class="signpanel1">01</code><code
+                        class="signpanel2">00</code><code class="signpanel1">28</code><code class="signpanel2">00</code><code>04</code><code>00</code><code>00</code><code>00</code></td>
+            </tr>
+        </table>
 
         <h2>Pixel Data</h2>
 
@@ -917,13 +1290,13 @@
                 <text font-family="Source Sans Pro" font-size="15" transform="translate(28.5 100.9)">Most significant</text>
                 <text font-family="Source Sans Pro" font-size="15" transform="translate(278 100.9)">Least significant</text>
             </svg>
-            <figcaption>Figure 4: Logical layout of one page of pixel data</figcaption>
+            <figcaption>Figure 6: Logical layout of one page of pixel data</figcaption>
         </figure>
 
-        <p>The purpose of the 4-byte header isn't clear. The first byte seems to be a page number, though I don't think it
-            affects sign operation. The other bytes are most frequently <code>0x10 0x00 0x00</code>.</p>
+        <p>The purpose of the 4-byte header isn't clear. The first byte seems to be a page number or ID, though I don't think
+            it affects sign operation. The other bytes are most frequently <code>0x10 0x00 0x00</code>.</p>
 
-        <p>The interpretation of the data bytes in Figure 4 depends on the dimensions of the sign they're meant for. For
+        <p>The interpretation of the data bytes in Figure 6 depends on the dimensions of the sign they're meant for. For
             example, consider a 7-pixel tall sign and a 16-pixel tall sign. The former needs only one byte for each column,
             while the latter needs two, so the same data will be interpreted differently depending on the sign:</p>
 
@@ -1425,7 +1798,7 @@
                     7
                 </text>
             </svg>
-            <figcaption>Figure 5: Mapping of data bits from Figure 4 to a 7-row sign (left) and a 16-row sign (right)</figcaption>
+            <figcaption>Figure 7: Mapping of data bits from Figure 6 to a 7-row sign (left) and a 16-row sign (right)</figcaption>
 
         </figure>
 
